@@ -1,15 +1,22 @@
-public class Room
+public class Node
 {
-    private Dictionary<Cardinal, Room> directions;
+    public int Id { get; set; }
+    public Dictionary<int, List<string>> Attributes { get; set; }
+    public List<Node> Neighbors { get; set; }
 
-    public Room()
+    public Node(int id)
     {
-        directions = new Dictionary<Cardinal, Room>
+        Id = id;
+        Attributes = new Dictionary<int, List<string>>();
+        Neighbors = new List<Node>();
+    }
+
+    public void AddNeighbor(Node neighbor)
+    {
+        if (!Neighbors.Contains(neighbor))
         {
-            { Cardinal.North, null },
-            { Cardinal.South, null },
-            { Cardinal.East, null },
-            { Cardinal.West, null }
-        };
+            Neighbors.Add(neighbor);
+            neighbor.Neighbors.Add(this);  // Ensure bidirectional connection
+        }
     }
 }
